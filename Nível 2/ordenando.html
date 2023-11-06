@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <title>Ordenando</title>
+</head>
+<body>
+    <h1 class="display-4 text-center">Ordenando valores</h1>
+
+    <div class="container col-6">
+        <div class="input-group mb-3 text-center">
+            <input id="valor" type="number" class="form-control" placeholder="Digite um valor" aria-label="Digite um valor" aria-describedby="button-addon2">
+            <button class="btn btn-outline-secondary" type="button" id="valor" onclick="add()">Adicionar</button>
+        </div>
+    </div>
+
+    <div class="container col-6">
+
+        <div class="input-group mb-3">
+            <label class="input-group-text" for="algoritmo">Escolha um algoritmo de ordenação</label>
+            <select class="form-select" id="algoritmo">
+                <option value="bubble">Bubble Sort</option> 
+                <option value="selection">Selection Sort</option> 
+                <option value="quick">Quick Sort</option> 
+
+            </select>
+        </div>
+        <div class="text-center">
+            <button class="btn btn-primary" onclick="ordenar()">Ordenar</button>
+            <button class= "btn btn-warning" onclick="misturar()">Misturar</button>
+            <ul id="valores"></ul>
+        </div>
+    </div>
+
+  <!-- Incluindo o arquivo "ordenando.js" -->
+  <script src="/assets/exemplojs/ordenando.js"></script>
+
+  <!-- Funções -->
+  <script>
+    // Função add
+    function add() {
+      const valor = document.getElementById('valor').value;
+      const valores = document.getElementById('valores');
+      const node = document.createElement('li');
+      const textNode = document.createTextNode(valor);
+      node.appendChild(textNode);
+      valores.appendChild(node);
+    }
+
+    // Função ordenar
+    function ordenar() {
+      const valores = document.getElementById('valores').children;
+      const vetor = Array.from(valores).map(item => parseInt(item.innerHTML));
+      const algoritmo = document.getElementById('algoritmo').value;
+
+      switch (algoritmo) {
+        case 'bubble':
+          bubble_sort(vetor);
+          break;
+        case 'selection':
+          selection_sort(vetor);
+          break;
+        case 'quick':
+          quick_sort(vetor);
+          break;
+      }
+
+      document.getElementById('valores').innerHTML = vetor.map(item => `<li>${item}</li>`).join('');
+    }
+
+    // Função misturar
+    function misturar() {
+      const valores = Array.from(document.getElementById('valores').children).map(item => parseInt(item.innerHTML));
+      shuffle(valores);
+
+      document.getElementById('valores').innerHTML = valores.map(item => `<li>${item}</li>`).join('');
+    }
+  </script>
+</body>
+</html>
